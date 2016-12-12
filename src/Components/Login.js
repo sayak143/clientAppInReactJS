@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Strophe from "strophe";
+import "strophe";
+
 class Login extends Component {
   constructor(){
     super();
@@ -26,17 +27,17 @@ class Login extends Component {
   	}
   }
   onConnect(status, err) {
-      if (status == window.Strophe.Status.CONNECTING) {
+      if (status === window.Strophe.Status.CONNECTING) {
   		    document.getElementById('message').innerHTML = "Connecting to the server for authentication";
-      } else if (status == window.Strophe.Status.CONNFAIL) {
+      } else if (status === window.Strophe.Status.CONNFAIL) {
   		    document.getElementById('message').innerHTML = 'Failed to connect.';
   	      document.getElementById('connect').value = 'connect';
-      } else if (status == window.Strophe.Status.DISCONNECTING) {
+      } else if (status === window.Strophe.Status.DISCONNECTING) {
   		    document.getElementById('message').innerHTML = 'Disconnecting from the server';
-      } else if (status == window.Strophe.Status.DISCONNECTED) {
+      } else if (status === window.Strophe.Status.DISCONNECTED) {
   		    document.getElementById('message').innerHTML = 'Disconnected.';
   	      document.getElementById('connect').value = 'connect';
-      } else if (status == window.Strophe.Status.CONNECTED) {
+      } else if (status === window.Strophe.Status.CONNECTED) {
           document.getElementById('message').innerHTML = 'Connection successful';
           this.props.isLoginSuccessful(true, this.state.connection);
   		    console.log('ECHOBOT:' + this.state.connection.jid + ' to talk to me.');
