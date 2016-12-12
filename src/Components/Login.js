@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Strophe from "../../node_modules/strophe";
-
+import Strophe from "strophe";
 class Login extends Component {
   constructor(){
     super();
