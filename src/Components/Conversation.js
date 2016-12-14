@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import Message from './Message';
-class Conversation extends Component {
-  constructor(){
-    super();
-    this.state = {
-      conversation: [""],
-    }
-  }
 
+class Conversation extends Component {
   appendToConversation(){
     this.setState({
-      conversation : this.state.conversation.concat(document.getElementById('agentMessage').value)
+      conversation : this.props.conversation.concat(document.getElementById('agentMessage').value)
     }
     );
   }
+
   render() {
     return (
       <div>
         <div className={this.props.visibilityStyle} >
           {
-            this.state.conversation.map((message, i)=>{
-              return <Message msg={message} key={i} id={i}/>
-            }
-            )
+            this.props.conversation.map((message, i)=>{
+              if(!!message.text && message.text.length > 0){
+                return <Message msg={message.text} key={i}/>
+              }
+            })
           }
           <form onSubmit={this.appendToConversation.bind(this)}>
             <input id="agentMessage"/>
@@ -33,5 +29,6 @@ class Conversation extends Component {
     );
   }
 }
+
 
 export default Conversation;

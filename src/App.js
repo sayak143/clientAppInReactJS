@@ -9,7 +9,7 @@ class App extends Component {
     if(this.props.agent.loggedIn){
       return (
           <div className="app">
-            <LoggedInState newMessage={this.props.emailList.emailList} />
+            <LoggedInState/>
           </div>
         );
     }else {
@@ -23,8 +23,7 @@ class App extends Component {
 }
 const mapStateToProps = (state)=>{
   return {
-      agent: state.agent,
-      emailList: state.emailList
+      agent: state.agent
   };
 };
 export default connect(mapStateToProps)(App);

@@ -1,5 +1,19 @@
 import React, { Component } from 'react';
 import Conversation from './Conversation';
+import axios from 'axios';
+import {connect} from 'react-redux';
+
+var getConversation = function(){
+  return function(dispatch){
+    axios.get("http://rest.learncode.academy/api/test123/tweets")
+    .then((response)=>{
+      dispatch({
+        type: "SET_CONVERSATION",
+        payload: response.data
+      })
+    })
+  }
+}
 
 class Email extends Component {
   constructor(){
@@ -10,6 +24,7 @@ class Email extends Component {
   }
 
   onclickEmail(){
+    this.props.dispatch(getConversation());
     this.setState({
       conversationVisibility : !this.state.conversationVisibility
     });
@@ -34,14 +49,20 @@ class Email extends Component {
               </label>
           </div>
           <span className="glyphicon glyphicon-star-empty"></span>
-          <span className="name" style={fromDivStyle} >{this.props.email.CustomerEmailAddress} Itinerary number: {this.props.email.ItineraryNumber}</span>
+          <span className="name" style={fromDivStyle} >{this.props.email.CustomerEmailAddress} Itinerary number : {this.props.email.ItineraryNumber}</span>
           <span className="text-muted" style={bodyDivStyle}>  </span>
           <span className="badge">{this.props.email.PosName}</span>
       </a>
-      <Conversation visibilityStyle={visibilityStyle}/>
+      <Conversation visibilityStyle={visibilityStyle} conversation={this.props.conversation}/>
       </div>
     );
   }
 }
 
-export default Email;
+const mapStateToProps = (state)=>{
+  return {
+      conversation: state.conversation.conversation
+  };
+};
+
+export default connect(mapStateToProps)(Email);

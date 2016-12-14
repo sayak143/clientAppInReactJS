@@ -5,3 +5,5 @@ StropheJS library to communicate with XMPP server
 Redux-route for route management
 
 Redux for state management
+
+Axios to handle REST requests

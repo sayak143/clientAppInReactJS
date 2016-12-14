@@ -4,7 +4,6 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import {Provider} from 'react-redux';
 import store from './store';
 import App from './App';
-import LoggedInState from './Components/LoggedInState';
 
 ReactDOM.render(
   <Provider store={store}>

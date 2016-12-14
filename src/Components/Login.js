@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import "strophe";
 import {connect} from "react-redux";
 
+var setLoginState = function(isLoggedIn){
+  return {
+    type: "SET_LOGIN_STATE",
+    payload: isLoggedIn
+  }
+}
+
+var addToEmailList = function(msg){
+  return {
+    type: "SET_EMAIL_LIST",
+    payload: msg
+  }
+}
+
 class Login extends Component {
   constructor(){
     super();
@@ -97,19 +111,5 @@ const mapStateToProps = (state)=>{
       agent: state.agent
   };
 };
-
-var setLoginState = function(isLoggedIn){
-  return {
-    type: "SET_LOGIN_STATE",
-    payload: isLoggedIn
-  }
-}
-
-var addToEmailList = function(msg){
-  return {
-    type: "SET_EMAIL_LIST",
-    payload: msg
-  }
-}
 
 export default connect(mapStateToProps)(Login);
