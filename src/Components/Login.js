@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "strophe";
+import {connect} from "react-redux";
 
 class Login extends Component {
   constructor(){
@@ -39,26 +40,27 @@ class Login extends Component {
   	      document.getElementById('connect').value = 'connect';
       } else if (status === window.Strophe.Status.CONNECTED) {
           document.getElementById('message').innerHTML = 'Connection successful';
-          this.props.isLoginSuccessful(true, this.state.connection);
+          //this.props.isLoginSuccessful(true);
   		    console.log('ECHOBOT:' + this.state.connection.jid + ' to talk to me.');
           var pres = new window.Strophe.Builder("presence");//.c("status").t("chat").up().c("show").t("chat");
           this.state.connection.send(pres);
           this.state.connection.addHandler(this.onMessage.bind(this), null, 'message');
+          this.props.dispatch(setLoginState(true));
       }
   }
 
   onMessage(msg) {
-      this.props.onReceivingMessage(msg);
+      this.props.dispatch(addToEmailList(msg));
       return true;
-  }
-
-  onChangeConnectButton(msg) {
-      ;
   }
 
   render() {
     return (
-      <div><div className="row"><div className="col-md-6 col-md-offset-3"><div className="panel panel-login">
+      <div>
+      <h1>{this.props.agent.name}</h1>
+      <div className="row">
+      <div className="col-md-6 col-md-offset-3">
+      <div className="panel panel-login">
       <div className="panel-body">
   			<div className="row">
   				<div className="col-lg-12">
@@ -81,10 +83,33 @@ class Login extends Component {
             <div id='message' className="form-group"></div>
           </div>
         </div>
-      </div></div></div></div>
+      </div>
+      </div>
+      </div>
+      </div>
     </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state)=>{
+  return {
+      agent: state.agent
+  };
+};
+
+var setLoginState = function(isLoggedIn){
+  return {
+    type: "SET_LOGIN_STATE",
+    payload: isLoggedIn
+  }
+}
+
+var addToEmailList = function(msg){
+  return {
+    type: "SET_EMAIL_LIST",
+    payload: msg
+  }
+}
+
+export default connect(mapStateToProps)(Login);

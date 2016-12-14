@@ -11,9 +11,9 @@ class EmailList extends Component {
 
   render(){
     var msg = this.props.newMessage;
-    if(msg!= null){
+    if(msg!= null && msg.length != 0){
       var parser = new DOMParser();
-      var xmlDoc = parser.parseFromString(atob(msg.textContent), "text/xml");
+      var xmlDoc = parser.parseFromString(atob(msg[0].textContent), "text/xml");
   		var taskObject = {};
   		var variables = xmlDoc.getElementsByTagName("variable");
       if(variables.length > 0){

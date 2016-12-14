@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import {Provider} from 'react-redux';
+import store from './store';
 import App from './App';
-import Login from './Components/Login';
+import LoggedInState from './Components/LoggedInState';
+
 ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path={"/"} component={App}>
-      <IndexRoute component={App}/>
-    </Route>
-  </Router>,
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path={"/"} component={App}>
+        <IndexRoute component={App}/>
+      </Route>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );

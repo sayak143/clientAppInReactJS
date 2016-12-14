@@ -22,8 +22,7 @@ class LoggedInState extends Component {
                     <div className="tab-content">
                         <div className="tab-pane fade in active" id="home">
                             <div className="list-group" id="myclass">
-                              <EmailList  xmppConnection={this.props.xmppConnection}
-                              newMessage={this.props.newMessage}/>
+                              <EmailList newMessage={this.props.newMessage}/>
                             </div>
                         </div>
                     </div>
