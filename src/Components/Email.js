@@ -15,6 +15,16 @@ var getConversation = function(){
   }
 }
 
+var sendEmail = function(msg){
+  // Add POST request for sending mail
+  return function(dispatch){
+      dispatch({
+        type: "SEND_EMAIL",
+        payload: msg
+      })
+  }
+}
+
 class Email extends Component {
   constructor(){
     super();
@@ -30,6 +40,10 @@ class Email extends Component {
     });
   }
 
+  onSendEmail(msg){
+    this.props.dispatch(sendEmail(msg));
+  }
+
   render() {
     var fromDivStyle = {
         display: 'inline-block',
@@ -42,7 +56,8 @@ class Email extends Component {
     var visibilityStyle = this.state.conversationVisibility ? "" : "hidden";
     return (
       <div>
-      <a href="#" className="list-group-item" id={this.props.id} onClick={this.onclickEmail.bind(this)} >
+      <a href="#" className="list-group-item" id={this.props.id}>
+      <div  onClick={this.onclickEmail.bind(this)} >
           <div className="checkbox">
               <label>
                   <input type="checkbox" />
@@ -52,8 +67,12 @@ class Email extends Component {
           <span className="name" style={fromDivStyle} >{this.props.email.CustomerEmailAddress} Itinerary number : {this.props.email.ItineraryNumber}</span>
           <span className="text-muted" style={bodyDivStyle}>  </span>
           <span className="badge">{this.props.email.PosName}</span>
+          </div>
+          <Conversation
+            visibilityStyle={visibilityStyle}
+            conversation={this.props.conversation}
+            sendEmail={this.onSendEmail.bind(this)}/>
       </a>
-      <Conversation visibilityStyle={visibilityStyle} conversation={this.props.conversation}/>
       </div>
     );
   }

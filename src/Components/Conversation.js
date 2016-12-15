@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import Message from './Message';
 
 class Conversation extends Component {
-  appendToConversation(){
-    this.setState({
-      conversation : this.props.conversation.concat(document.getElementById('agentMessage').value)
-    }
-    );
+
+  onSendEmail(){
+    this.props.sendEmail(document.getElementById('agentMessage').value);
+    document.getElementById('agentMessage').value = "";
   }
 
   render() {
+    var separatorLineStyle = {
+      height:'1px',
+      border:'none',
+      color:'#ddd',
+      backgroundColor:'#ddd'
+    }
+
     return (
       <div>
         <div className={this.props.visibilityStyle} >
+        <hr style={separatorLineStyle}/>
           {
             this.props.conversation.map((message, i)=>{
               if(!!message.text && message.text.length > 0){
@@ -20,9 +27,8 @@ class Conversation extends Component {
               }
             })
           }
-          <form onSubmit={this.appendToConversation.bind(this)}>
-            <input id="agentMessage"/>
-            <button>Send</button>
+          <form className="form-group" onSubmit={this.onSendEmail.bind(this)}>
+            <input id="agentMessage" placeholder='Write your message'/>
           </form>
         </div>
       </div>
